@@ -1,4 +1,16 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Overview
+
+The project was created to familiarize myself with firebase functionality. It will be a small blogging platform.
+
+The scaffolding of the [Next.js](https://nextjs.org/) project was created with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## Functionality
+
+- Anon users can only read posts
+- Form to create a user
+- Oauth to sign in
+- User needs to log in to do CRUD operations on their own posts and vote on others' posts
+- User should be able to see all their posts
 
 ## Getting Started
 
