@@ -11,6 +11,7 @@ import {
   Query,
   query,
   QueryDocumentSnapshot,
+  Timestamp,
   where,
 } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
@@ -59,3 +60,5 @@ export function postToJSON(doc: DocumentSnapshot) {
       }
     : null;
 }
+
+export const fromMillis = Timestamp.fromMillis;
