@@ -3,19 +3,21 @@ import { Post } from "../interfaces/data-model";
 
 interface PostFeedProps {
   posts: Post[];
-  admin: boolean;
+  admin?: boolean;
 }
 
 interface PostItemProps {
   post: Post;
-  admin: boolean;
+  admin?: boolean;
 }
 export default function PostFeed({ posts, admin }: PostFeedProps) {
-  return posts
-    ? posts.map((post) => (
+  return posts ? (
+    <>
+      {posts.map((post) => (
         <PostItem post={post} key={post.slug} admin={admin} />
-      ))
-    : null;
+      ))}
+    </>
+  ) : null;
 }
 
 function PostItem({ post, admin = false }: PostItemProps) {
