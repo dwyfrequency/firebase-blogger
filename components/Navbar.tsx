@@ -1,11 +1,11 @@
-import Link from 'next/link';
-import { User } from '../interfaces/data-model';
-import Image from 'next/image';
+import Link from "next/link";
+import Image from "next/image";
+import { useContext } from "react";
+import { UserContext } from "../lib/context";
 
 // Top navbar
 export default function Navbar() {
-  const user: User = {};
-  const username = 'jack';
+  const { user, username } = useContext(UserContext);
 
   return (
     <nav className="navbar">
@@ -27,6 +27,7 @@ export default function Navbar() {
             <li>
               <Link href={`/${username}`} passHref>
                 TODO
+                <img src={user?.photoURL} alt="image of user" />
                 {/* <Image src={user?.photoURL ?? ''} alt={'hello'} /> */}
               </Link>
             </li>

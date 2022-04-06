@@ -1,3 +1,6 @@
-export interface User {
-  photoURL?: string;
+import {User} from "firebase/auth";
+
+export interface DefaultUserContext {
+	user?: null|User;
+	username?: null|string;
 }
