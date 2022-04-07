@@ -3,14 +3,11 @@ import { getApp, getApps, initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import {
   collection,
-  DocumentData,
   DocumentSnapshot,
   getDocs,
   getFirestore,
   limit,
-  Query,
   query,
-  QueryDocumentSnapshot,
   Timestamp,
   where,
 } from "firebase/firestore";
