@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { AppUser } from "../interfaces/data-model";
 
 interface UserProfileProps {

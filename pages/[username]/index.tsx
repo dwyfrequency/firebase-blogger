@@ -10,15 +10,16 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { GetServerSidePropsContext } from "next";
 
-export async function getServerSideProps({
-  query: queryParams,
-}: {
-  query: { username: string };
-}) {
-  const { username } = queryParams;
+export async function getServerSideProps(props: GetServerSidePropsContext) {
+  const {
+    query: { username },
+  } = props;
 
-  const userDoc = await getUserWithUsername(username);
+  const userDoc = await getUserWithUsername(
+    Array.isArray(username) ? username[0] : username ?? ""
+  );
 
   // JSON serializable data
   let user = null;
