@@ -8,7 +8,7 @@ export interface DefaultUserContext {
 
 export interface Post {
   slug: string;
-  content?: string;
+  content: string;
   username: string;
   title: string;
   published: boolean;
