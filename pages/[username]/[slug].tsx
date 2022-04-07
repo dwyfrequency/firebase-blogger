@@ -14,6 +14,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+import { Post } from "../../interfaces/data-model";
 
 export async function getStaticProps({ params }: GetStaticPropsContext) {
   const { username, slug } = params ?? { username: "jdwy215", slug: "" };
@@ -64,6 +65,34 @@ export async function getStaticPaths() {
   };
 }
 
-export default function UserPost({}) {
-  return <main className={styles.container}>UserPost</main>;
+interface UserPostProps {
+  path: {
+    username: string;
+    slug: string;
+  };
+  post: Post;
+}
+
+// TODO: Update function
+export default function UserPost({ path, post: postProp }: UserPostProps) {
+  const postRef = getDoc(
+    doc(firestore, "users", path.username, "posts", path.slug)
+  );
+  const [realtimePost] = useDocumentData(postRef);
+
+  const post = realtimePost ?? postProp;
+
+  return (
+    <main className={styles.container}>
+      UserPost
+      <section>
+        <PostContent post={post} />
+      </section>
+      <aside className="card">
+        <p>
+          <strong>{post.heartCount ?? 0} 🤍</strong>
+        </p>
+      </aside>
+    </main>
+  );
 }
