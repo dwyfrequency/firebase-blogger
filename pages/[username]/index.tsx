@@ -21,6 +21,12 @@ export async function getServerSideProps(props: GetServerSidePropsContext) {
     Array.isArray(username) ? username[0] : username ?? ""
   );
 
+  if (!userDoc) {
+    return {
+      notFound: true,
+    };
+  }
+
   // JSON serializable data
   let user = null;
   let posts = null;
