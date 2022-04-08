@@ -94,7 +94,6 @@ export default function UserPost({ path, post: postProp }: UserPostProps) {
 
   return (
     <main className={styles.container}>
-      UserPost
       <section>
         <PostContent post={post} />
       </section>

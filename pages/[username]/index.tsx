@@ -63,7 +63,6 @@ interface UserProfilePageProps {
 export default function UserProfilePage({ user, posts }: UserProfilePageProps) {
   return (
     <div>
-      UserProfilePage
       <UserProfile user={user} />
       <PostFeed posts={posts} />
     </div>
