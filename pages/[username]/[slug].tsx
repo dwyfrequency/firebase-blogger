@@ -17,7 +17,6 @@ import { Post } from "../../interfaces/data-model";
 // TODO: troobleshoot this file!!!
 export async function getStaticProps({ params }: GetStaticPropsContext) {
   const { username, slug } = params ?? { username: "jdwy215", slug: "" };
-  console.log({ username, slug });
   const userDoc = await getUserWithUsername(
     Array.isArray(username) ? username[0] : username ?? ""
   );
@@ -29,11 +28,9 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
     // TODO: Implement logic to get indiv post given user doc
     // Users -> User -> Posts -> Post; How do I given a User doc get to the underlying post from the posts collection
     // const postRef = userDoc.ref.collection("posts").doc(slug);
-    console.log({ userDoc: userDoc.data() });
     const postRef = doc(
       firestore,
-      "users",
-      userDoc.data().uid ?? "",
+      userDoc.ref.path,
       "posts",
       Array.isArray(slug) ? slug[0] : slug ?? ""
     );
@@ -87,7 +84,6 @@ interface UserPostProps {
 
 // TODO: Update function
 export default function UserPost({ path, post: postProp }: UserPostProps) {
-  console.log({ path });
   const postRef = doc(firestore, path);
   const [realtimePost] = useDocumentData(postRef);
 
