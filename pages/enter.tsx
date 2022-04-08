@@ -15,7 +15,6 @@ import { doc, getDoc, writeBatch } from "firebase/firestore";
 
 export default function EnterPage({}) {
   const { user, username } = useContext(UserContext);
-  console.log({ user, username });
 
   // 1. user signed out <SignInButton />
   // 2. user signed in, but missing username <UsernameForm />
@@ -124,7 +123,6 @@ function UsernameForm() {
         const usernameRef = doc(firestore, `usernames/${username}`);
         const docSnapshot = await getDoc(usernameRef);
         const exists = docSnapshot.exists();
-        console.log("Firestore read executed!");
         setIsValid(!exists);
         setLoading(false);
       }

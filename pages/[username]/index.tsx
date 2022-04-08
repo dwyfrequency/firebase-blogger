@@ -61,7 +61,6 @@ interface UserProfilePageProps {
 }
 
 export default function UserProfilePage({ user, posts }: UserProfilePageProps) {
-  console.log({ comp: "UserProfilePage", user, posts });
   return (
     <div>
       UserProfilePage
