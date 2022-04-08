@@ -42,7 +42,8 @@ function PostManager() {
     "posts",
     Array.isArray(slug) ? slug[0] : slug ?? ""
   );
-  const [post] = useDocumentData(postRef);
+  const [postData] = useDocumentData(postRef);
+  const post = postData as Post;
 
   return (
     <main className={styles.container}>
