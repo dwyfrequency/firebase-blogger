@@ -50,7 +50,7 @@ const Home = (props: { posts: Post[] }) => {
 
     const q = query(
       collectionGroup(firestore, "posts"),
-      where("published", "==", false /** false showns unpublished */),
+      where("published", "==", true),
       orderBy("createdAt", "desc"),
       startAfter(cursor),
       limit(LIMIT)
