@@ -41,9 +41,7 @@ function PostList() {
   const q = query(postsCollectionRef, orderBy("createdAt"));
   const [querySnapshot] = useCollection(q);
 
-  // TODO: investigate possible issue here
   const posts = querySnapshot?.docs.map((doc) => doc.data()) as Post[];
-
   return (
     <>
       <h1>Manage your Posts</h1>
