@@ -34,7 +34,12 @@ export async function getServerSideProps(props: GetServerSidePropsContext) {
   if (userDoc) {
     user = userDoc.data();
     const postsCollectionRef = collection(firestore, userDoc.ref.path, "posts");
-    const postsFilter = where("published", "==", true);
+    const postsFilter = where(
+      "published",
+      "==",
+      // TODO: update to true once form fixed
+      false /** false showns unpublished */
+    );
     const q = query(
       postsCollectionRef,
       postsFilter,
@@ -56,6 +61,7 @@ interface UserProfilePageProps {
 }
 
 export default function UserProfilePage({ user, posts }: UserProfilePageProps) {
+  console.log({ comp: "UserProfilePage", user, posts });
   return (
     <div>
       UserProfilePage

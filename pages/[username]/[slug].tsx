@@ -4,23 +4,20 @@ import { firestore, getUserWithUsername, postToJSON } from "../../lib/firebase";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { GetStaticPropsContext } from "next";
 import {
-  collection,
   collectionGroup,
   doc,
-  DocumentData,
-  DocumentReference,
   getDoc,
   getDocs,
-  limit,
   orderBy,
   query,
   where,
 } from "firebase/firestore";
 import { Post } from "../../interfaces/data-model";
 
-// TODO: troobleshoot this file
+// TODO: troobleshoot this file!!!
 export async function getStaticProps({ params }: GetStaticPropsContext) {
   const { username, slug } = params ?? { username: "jdwy215", slug: "" };
+  console.log({ username, slug });
   const userDoc = await getUserWithUsername(
     Array.isArray(username) ? username[0] : username ?? ""
   );
@@ -53,7 +50,11 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
 export async function getStaticPaths() {
   const q = query(
     collectionGroup(firestore, "posts"),
-    where("published", "==", true),
+    where(
+      "published",
+      "==", // TODO: update to true once form fixed
+      false /** false showns unpublished */
+    ),
     orderBy("createdAt", "desc")
   );
 
@@ -86,6 +87,7 @@ interface UserPostProps {
 
 // TODO: Update function
 export default function UserPost({ path, post: postProp }: UserPostProps) {
+  console.log({ path });
   const postRef = doc(firestore, path);
   const [realtimePost] = useDocumentData(postRef);
 
