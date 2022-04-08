@@ -23,7 +23,11 @@ const LIMIT = 1;
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const q = query(
     collectionGroup(firestore, "posts"),
-    where("published", "==", true),
+    where(
+      "published",
+      "==", // TODO: update to true once form fixed
+      false /** false showns unpublished */
+    ),
     orderBy("createdAt", "desc"),
     limit(LIMIT)
   );
@@ -50,7 +54,11 @@ const Home = (props: { posts: Post[] }) => {
 
     const q = query(
       collectionGroup(firestore, "posts"),
-      where("published", "==", true),
+      where(
+        "published",
+        "==", // TODO: update to true once form fixed
+        false /** false showns unpublished */
+      ),
       orderBy("createdAt", "desc"),
       startAfter(cursor),
       limit(LIMIT)
