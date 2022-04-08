@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 import { useDocumentData } from "react-firebase-hooks/firestore";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import ReactMarkdown from "react-markdown";
 import Link from "next/link";
 import toast from "react-hot-toast";
@@ -82,12 +82,14 @@ interface PostFormProps {
 }
 
 function PostForm({ defaultValues, postRef, preview }: PostFormProps) {
-  const { register, handleSubmit, reset, watch } = useForm({
+  const { register, handleSubmit, reset, watch } = useForm<Post>({
     defaultValues,
     mode: "onChange",
   });
 
-  const updatePost = async ({ content, published }: Post) => {
+  // Can't really find the correct type here but this works
+  const updatePost = async (data: unknown) => {
+    const { content, published } = data as Post;
     await updateDoc(postRef, {
       content,
       published,
@@ -108,14 +110,13 @@ function PostForm({ defaultValues, postRef, preview }: PostFormProps) {
       )}
 
       <div className={preview ? styles.hidden : styles.controls}>
-        <textarea name="content" ref={register}></textarea>
+        <textarea {...register("content")}></textarea>
 
         <fieldset>
           <input
             className={styles.checkbox}
-            name="published"
+            {...register("published")}
             type="checkbox"
-            ref={register}
           />
           <label>Published</label>
         </fieldset>
