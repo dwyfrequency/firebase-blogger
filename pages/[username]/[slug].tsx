@@ -13,6 +13,9 @@ import {
   where,
 } from "firebase/firestore";
 import { Post } from "../../interfaces/data-model";
+import HeartButton from "../../components/HeartButton";
+import AuthCheck from "../../components/AuthCheck";
+import Link from "next/link";
 
 // TODO: troobleshoot this file!!!
 export async function getStaticProps({ params }: GetStaticPropsContext) {
@@ -99,6 +102,15 @@ export default function UserPost({ path, post: postProp }: UserPostProps) {
         <p>
           <strong>{post.heartCount ?? 0} 🤍</strong>
         </p>
+        <AuthCheck
+          fallback={
+            <Link href="/enter">
+              <button>💗 Sign Up</button>
+            </Link>
+          }
+        >
+          <HeartButton postRef={postRef} />
+        </AuthCheck>
       </aside>
     </main>
   );
