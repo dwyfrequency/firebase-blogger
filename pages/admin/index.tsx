@@ -31,6 +31,7 @@ export default function AdminPostsPage() {
   );
 }
 
+// TODO: Add logic to determine if admin or not
 function PostList() {
   const postsCollectionRef = collection(
     firestore,
