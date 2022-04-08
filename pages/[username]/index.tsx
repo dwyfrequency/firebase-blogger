@@ -34,12 +34,7 @@ export async function getServerSideProps(props: GetServerSidePropsContext) {
   if (userDoc) {
     user = userDoc.data();
     const postsCollectionRef = collection(firestore, userDoc.ref.path, "posts");
-    const postsFilter = where(
-      "published",
-      "==",
-      // TODO: update to true once form fixed
-      false /** false showns unpublished */
-    );
+    const postsFilter = where("published", "==", true);
     const q = query(
       postsCollectionRef,
       postsFilter,

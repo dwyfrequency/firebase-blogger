@@ -17,7 +17,6 @@ import HeartButton from "../../components/HeartButton";
 import AuthCheck from "../../components/AuthCheck";
 import Link from "next/link";
 
-// TODO: troobleshoot this file!!!
 export async function getStaticProps({ params }: GetStaticPropsContext) {
   const { username, slug } = params ?? { username: "jdwy215", slug: "" };
   const userDoc = await getUserWithUsername(
@@ -28,9 +27,6 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   let path;
 
   if (userDoc) {
-    // TODO: Implement logic to get indiv post given user doc
-    // Users -> User -> Posts -> Post; How do I given a User doc get to the underlying post from the posts collection
-    // const postRef = userDoc.ref.collection("posts").doc(slug);
     const postRef = doc(
       firestore,
       userDoc.ref.path,
@@ -50,11 +46,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
 export async function getStaticPaths() {
   const q = query(
     collectionGroup(firestore, "posts"),
-    where(
-      "published",
-      "==", // TODO: update to true once form fixed
-      false /** false showns unpublished */
-    ),
+    where("published", "==", true),
     orderBy("createdAt", "desc")
   );
 
