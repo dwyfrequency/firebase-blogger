@@ -7,6 +7,8 @@ import {
   collection,
   collectionGroup,
   doc,
+  DocumentData,
+  DocumentReference,
   getDoc,
   getDocs,
   limit,
@@ -16,6 +18,7 @@ import {
 } from "firebase/firestore";
 import { Post } from "../../interfaces/data-model";
 
+// TODO: troobleshoot this file
 export async function getStaticProps({ params }: GetStaticPropsContext) {
   const { username, slug } = params ?? { username: "jdwy215", slug: "" };
   const userDoc = await getUserWithUsername(
@@ -25,19 +28,25 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
   let post;
   let path;
 
-  const docData = userDoc?.data();
-
   if (userDoc) {
     // TODO: Implement logic to get indiv post given user doc
     // Users -> User -> Posts -> Post; How do I given a User doc get to the underlying post from the posts collection
     // const postRef = userDoc.ref.collection("posts").doc(slug);
-    //post = postToJSON(await postRef.get());
-    // path = postRef.path;
+    console.log({ userDoc: userDoc.data() });
+    const postRef = doc(
+      firestore,
+      "users",
+      userDoc.data().uid ?? "",
+      "posts",
+      Array.isArray(slug) ? slug[0] : slug ?? ""
+    );
+    post = postToJSON(await getDoc(postRef)) as Post;
+    path = postRef.path;
   }
 
   return {
     props: { post, path },
-    revalidate: 5000,
+    revalidate: 5000, // regenerate this page on server every 5k
   };
 }
 
@@ -61,12 +70,14 @@ export async function getStaticPaths() {
     //   { params: { username, slug }}
     // ],
     paths,
+    // when user comes to page that is not generated yet (new post), it tells next to fall back to regular server side rendering
     fallback: "blocking",
   };
 }
 
 interface UserPostProps {
-  path: {
+  path: string;
+  paths: {
     username: string;
     slug: string;
   };
@@ -75,12 +86,10 @@ interface UserPostProps {
 
 // TODO: Update function
 export default function UserPost({ path, post: postProp }: UserPostProps) {
-  const postRef = getDoc(
-    doc(firestore, "users", path.username, "posts", path.slug)
-  );
+  const postRef = doc(firestore, path);
   const [realtimePost] = useDocumentData(postRef);
 
-  const post = realtimePost ?? postProp;
+  const post = (realtimePost ?? postProp) as Post;
 
   return (
     <main className={styles.container}>
