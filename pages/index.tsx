@@ -57,7 +57,7 @@ const Home = (props: { posts: Post[] }) => {
     );
 
     // TODO investigate potential issue with this
-    const newPosts = (await getDocs(q)).docs.map((doc) => doc.data()) as Post[];
+    const newPosts = (await getDocs(q)).docs.map(postToJSON) as Post[];
 
     setPosts(posts.concat(newPosts));
     setLoading(false);

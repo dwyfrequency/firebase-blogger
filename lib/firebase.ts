@@ -12,6 +12,7 @@ import {
   where,
 } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { Post } from "../interfaces/data-model";
 
 // App's Firebase configuration
 const firebaseConfig = {
@@ -44,14 +45,14 @@ export async function getUserWithUsername(username: string) {
 }
 
 /** Converts a firestore document to JSON. */
-export function postToJSON(doc: DocumentSnapshot) {
+export function postToJSON(doc: DocumentSnapshot): Partial<Post> | null {
   const data = doc.data();
   return data
     ? {
         ...data,
         // Gotcha! firestore timestamp NOT serializable to JSON. Must convert to milliseconds
-        createdAt: data?.createdAt.toMillis(),
-        updatedAt: data?.updatedAt.toMillis(),
+        createdAt: data?.createdAt.toMillis() as number,
+        updatedAt: data?.updatedAt.toMillis() as number,
       }
     : null;
 }

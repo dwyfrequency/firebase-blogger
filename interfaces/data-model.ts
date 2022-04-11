@@ -13,8 +13,8 @@ export interface Post {
   title: string;
   published: boolean;
   heartCount: number;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
+  createdAt: number;
+  updatedAt: number;
 }
 
 export interface AppUser extends User {

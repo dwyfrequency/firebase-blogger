@@ -2,7 +2,7 @@ import styles from "../../styles/Admin.module.css";
 import AuthCheck from "../../components/AuthCheck";
 import PostFeed from "../../components/PostFeed";
 import { UserContext } from "../../lib/context";
-import { firestore, auth } from "../../lib/firebase";
+import { firestore, auth, postToJSON } from "../../lib/firebase";
 import { FormEvent, useContext, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -42,7 +42,7 @@ function PostList() {
   const q = query(postsCollectionRef, orderBy("createdAt"));
   const [querySnapshot] = useCollection(q);
 
-  const posts = querySnapshot?.docs.map((doc) => doc.data()) as Post[];
+  const posts = querySnapshot?.docs.map(postToJSON) as Post[];
   return (
     <>
       <h1>Manage your Posts</h1>
