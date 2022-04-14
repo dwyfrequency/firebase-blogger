@@ -51,8 +51,8 @@ export function postToJSON(doc: DocumentSnapshot): Partial<Post> | null {
     ? {
         ...data,
         // Gotcha! firestore timestamp NOT serializable to JSON. Must convert to milliseconds
-        createdAt: data?.createdAt.toMillis() as number,
-        updatedAt: data?.updatedAt.toMillis() as number,
+        createdAt: (data?.createdAt?.toMillis() as number) ?? 0,
+        updatedAt: (data?.updatedAt?.toMillis() as number) ?? 0,
       }
     : null;
 }
